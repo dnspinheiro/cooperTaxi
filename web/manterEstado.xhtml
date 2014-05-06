@@ -1,0 +1,68 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <title>Cadastro de Estado</title>
+        <!--  Favicon / -->
+        <link rel="shortcut icon" href="favicon.png" type="image/x-icon" />
+        <link rel="stylesheet" href="${pageContext.request.contextPath}css.css" />
+        <link rel="stylesheet" href="css/gumby.css"/>   <!-- Gumby Framework /-->
+        <link rel="stylesheet" href="css/style.css"/>   <!-- Main stylesheet /-->
+    </h:head>
+    <h:body>
+
+        <h:link value="Menu Principal" outcome="index.html"/>
+        <br/>
+        <br/>
+        <h3>Cadastro de Estado</h3>
+        <br/>
+        <h:form id="formEstado" class="form-horizontal">
+            <h:inputHidden id="id" value="#{estadoBean.estado.id}"/>
+            <div class="control-group">
+                <div class="controls">
+                    NOME*<h:inputText id="nome" value="#{estadoBean.estado.nome}" required="true" requiredMessage="Campo Obrigatório"/><br/>
+                    <h:message for="nome"/>
+                </div>
+            </div>
+            <div class="control-group">
+                <div class="controls">
+                    SIGLA*<h:inputText id="sigla" value="#{estadoBean.estado.sigla}" required="true" requiredMessage="Campo Obrigatório"/><br/>
+                    <h:message for="sigla"/>
+                </div>
+            </div>
+            <h:messages for="formEstado"/><br/>
+
+            <h:commandButton value="Inserir" class="button2" action="#{estadoBean.inserir()}"/>
+
+            <h:commandButton value="Alterar" class="button2" action="#{estadoBean.alterar()}"/>
+
+            <h:commandButton value="Excluir" class="button2" action="#{estadoBean.excluir()}"/>
+
+        </h:form>
+        <br/>
+        <h:dataTable value="#{estadoBean.estados}" var="est" border="1">
+            
+            <h:column>
+                <f:facet name="header"><h:outputText value="ID" /></f:facet>
+                <h:outputText value="#{est.id}"/>
+            </h:column>
+            <h:column>
+                <h:form>
+                    <f:facet name="header"><h:outputText value="NOME" /></f:facet>
+                    <h:commandLink value="#{est.nome}">
+                        <f:setPropertyActionListener target="#{estadoBean.estado}" value="#{est}"/>
+                    </h:commandLink>
+                </h:form>
+
+            </h:column>
+            
+            <h:column>
+                <f:facet name="header"><h:outputText value="SIGLA" /></f:facet>
+                <h:outputText value="#{est.sigla}"/>
+            </h:column>
+        </h:dataTable>
+    </h:body>
+</html>
+

@@ -1,0 +1,138 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <title>Cadastro de Viagem</title>
+        <!--  Favicon / -->
+        <link rel="shortcut icon" href="favicon.png" type="image/x-icon" />
+        <link rel="stylesheet" href="${pageContext.request.contextPath}css.css" />
+        <link rel="stylesheet" href="css/gumby.css"/>   <!-- Gumby Framework /-->
+        <link rel="stylesheet" href="css/style.css"/>   <!-- Main stylesheet /-->
+    </h:head>
+    <h:body>
+
+        <h:link value="Menu Principal" outcome="index.html"/>
+        <br/>
+        <br/>
+        <h3>Cadastro de Viagens</h3>
+        <br/>
+
+        <!-- ################### Formulario de clientes  ###############-->
+        <h:form id="formAddCliente" class="form-horizontal">
+            <div class="control-group">
+                <div class="controls">
+                    Cliente*
+                    <h:selectOneMenu value="#{viagemClienteBean.cliente.id}">
+                        <f:selectItem itemLabel="Selecione..."/>
+                        <f:selectItems value="#{clienteBean.clientes}" var="client" itemLabel="#{client.nome}" itemValue="#{client.id}"/>
+                    </h:selectOneMenu>
+                    <!--div class="medium primary btn"><a href="#">Add Cliente</a></div-->
+                    <h:commandButton value="Inserir Cliente" class="primary btn" action="#{viagemClienteBean.inserirCliente()}"/>
+                    <h:outputText value="#{viagemBean.mensagem}"/>
+                </div>
+            </div>
+            <h:messages for="formAddCliente"/>
+            <br/>
+        </h:form>
+
+        <!--##############################  Tabela de clientes da viagem    ##############-->
+        <h:dataTable value="#{viagemClienteBean.clientes}" var="cli" border="1">
+            <h:column>
+                <f:facet name="header"><h:outputText value="ID" /></f:facet>
+                <h:outputText value="#{cli.id}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header"><h:outputText value="NOME" /></f:facet>
+                <h:outputText value="#{cli.nome}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header"><h:outputText value="TEL" /></f:facet>
+                <h:outputText value="#{cli.telefone}"/>
+            </h:column>
+        </h:dataTable>
+
+        <!--######################## Inicio do formulario de viagem ###################-->
+        <h:form id="formViagem" class="form-horizontal">
+
+            <h:inputHidden value="#{viagemClienteBean.viagem.id}"/>
+
+            <div class="control-group">
+                <div class="controls">
+                    Funcionário* 
+                    <h:selectOneMenu value="#{viagemClienteBean.funcionario.id}">
+                        <f:selectItem itemLabel="#{viagemClienteBean.viagem.func.nome}"/>
+                        <f:selectItems value="#{funcionarioBean.funcionarios}" var="func" itemLabel="#{func.nome}" itemValue="#{func.id}"/>
+                    </h:selectOneMenu>
+                    <br/>
+                </div>
+            </div>
+            <div class="control-group">
+                <div class="controls">
+                    Linha*
+                    <h:selectOneMenu value="#{viagemClienteBean.linha.id}">
+                        <f:selectItem itemLabel="#{viagemClienteBean.viagem.linha.origem.rua} - #{viagemClienteBean.viagem.linha.destino.rua}"/>
+                        <f:selectItems value="#{linhaBean.linhas}" var="lin" itemLabel="#{lin.origem.rua} - #{lin.destino.rua}" itemValue="#{lin.id}"/>
+                    </h:selectOneMenu>
+                </div>
+            </div>
+            <div class="control-group">
+                <div class="controls">
+                    Veículo*
+                    <h:selectOneMenu value="#{viagemClienteBean.veiculo.id}">
+                        <f:selectItem itemLabel="#{viagemClienteBean.viagem.veiculo.placa}"/>
+                        <f:selectItems value="#{veiculoBean.veiculos}" var="vei" itemLabel="#{vei.placa}" itemValue="#{vei.id}"/>
+                    </h:selectOneMenu>
+                </div>
+            </div>
+            <h:commandButton value="Inserir" class="button2" action="#{viagemClienteBean.inserir()}"/>
+
+            <h:commandButton value="Alterar" class="button2" action="#{viagemClienteBean.alterar()}"/>
+
+            <h:commandButton value="Excluir" class="button2" action="#{viagemClienteBean.excluir()}"/>
+            
+            <h:messages for="formViagem"/>
+        </h:form>
+
+        <!--*****************Final de formulário de viagem*****************************-->
+
+        <br/>
+        <h:dataTable value="#{viagemClienteBean.viagemClientes}" var="via" border="1">
+            <h:column>
+                <f:facet name="header"><h:outputText value="ID" /></f:facet>
+                <h:outputText value="#{via.viagem.id}"/>
+            </h:column>
+
+            <h:column>
+                <f:facet name="header"><h:outputText value="DESTINO - ORIGEM" /></f:facet>
+                <h:form>
+                    <h:commandLink value=" #{via.viagem.linha.origem.cidade.nome} -  
+                                   #{via.viagem.linha.origem.rua} --->  
+                                   #{via.viagem.linha.destino.cidade.nome} -  
+                                   #{via.viagem.linha.destino.rua}"> 
+                        <f:setPropertyActionListener target="#{viagemClienteBean.viagem}" value="#{via.viagem}"/>
+                    </h:commandLink>
+                </h:form>
+            </h:column>
+            <h:column>
+                <f:facet name="header"><h:outputText value="DATA" /></f:facet>
+                <h:outputText value="#{via.viagem.dat}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header"><h:outputText value="FUNCIONÁRIO" /></f:facet>
+                <h:outputText value="#{via.viagem.func.nome}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header"><h:outputText value="VEÍCULO" /></f:facet>
+                <h:outputText value="#{via.viagem.veiculo.placa} - #{via.viagem.veiculo.estilo}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header"><h:outputText value="CLIENTE" /></f:facet>
+                <h:outputText value="#{via.cliente.nome}"/>
+                <!--f:convertNumber pattern="R$ #0.00"/-->
+            </h:column>
+        </h:dataTable>
+
+    </h:body>
+</html>

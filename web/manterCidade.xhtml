@@ -1,0 +1,87 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <title>Cadastro de Cidades</title>
+        <link rel="stylesheet" href="${pageContext.request.contextPath}css.css" />
+        <!--  Favicon / -->
+        <link rel="shortcut icon" href="favicon.png" type="image/x-icon" />
+        <link rel="stylesheet" href="css/gumby.css"/>   <!-- Gumby Framework /-->
+        <link rel="stylesheet" href="css/style.css"/>   <!-- Main stylesheet /-->
+    </h:head>
+    <h:body>
+        <h:link value="Menu Principal" outcome="index.html"/>
+        <br/>
+        <br/>
+
+        <h3>Cadastro de Cidades</h3>
+        <br/>
+
+        <h:form id="formCidade" class="form-horizontal">
+
+            <h:inputHidden value="#{cidadeBean.cidade.id}"/>
+
+            <div class="control-group">
+                <div class="controls">
+                    NOME*<h:inputText id="nome" value="#{cidadeBean.cidade.nome}" required="true" requiredMessage="Campo Obrigatório"/><br/>
+                    <h:messages for="nome"/>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <div class="controls">
+                    POPULAÇÃO*<h:inputText id="populacao" value="#{cidadeBean.cidade.populacao}" required="true" requiredMessage="Campo Obrigatório"/><br/>
+                    <h:message for="populacao"/>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <div class="controls">
+                    Estado*
+                    <h:selectOneMenu id="estado" value="#{cidadeBean.estado.id}" required="true" requiredMessage="Campo Obrigatório">
+                        <f:selectItem itemLabel="Selecione..."/>
+                        <f:selectItems value="#{estadoBean.estados}" var="est" itemLabel="#{est.sigla}" itemValue="#{est.id}" />
+                    </h:selectOneMenu>
+                    <h:message for="estado"/>
+                </div>
+            </div>
+            <h:messages for="formCidade"/>
+            <br/>
+            <h:commandButton value="Inserir" class="button2" action="#{cidadeBean.inserir()}"/>                    
+
+            <h:commandButton value="Alterar" class="button2" action="#{cidadeBean.alterar()}"/>
+
+            <h:commandButton value="Excluir" class="button2" action="#{cidadeBean.excluir()}"/>
+
+        </h:form>
+        <br/>
+        <form>
+            <h:dataTable value="#{cidadeBean.cidades}" var="cid" border="1">
+                <h:column>
+                    <f:facet name="header"><h:outputText value="ID" /></f:facet>
+                    <h:outputText value="#{cid.id}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header"><h:outputText value="ESTADO" /></f:facet>
+                    <h:outputText value="#{cid.estado.sigla}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header"><h:outputText value="CIDADE" /></f:facet>
+                    <h:form>
+                        <h:commandLink value="#{cid.nome}">                        
+                            <f:setPropertyActionListener target="#{cidadeBean.cidade}" value="#{cid}"/>
+                        </h:commandLink>
+                    </h:form>
+
+                </h:column>
+                <h:column>
+                    <f:facet name="header"><h:outputText value="POPULAÇÃO" /></f:facet>
+                    <h:outputText value="#{cid.populacao}"/>
+                </h:column>
+            </h:dataTable>
+        </form>
+    </h:body>
+</html>
+

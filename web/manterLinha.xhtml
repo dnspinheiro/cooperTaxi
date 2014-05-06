@@ -1,0 +1,96 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <title>Cadastro de Linha</title>
+        <!--  Favicon / -->
+        <link rel="shortcut icon" href="favicon.png" type="image/x-icon" />
+        <link rel="stylesheet" href="${pageContext.request.contextPath}css.css" />
+        <link rel="stylesheet" href="css/gumby.css"/>   <!-- Gumby Framework /-->
+        <link rel="stylesheet" href="css/style.css"/>   <!-- Main stylesheet /-->
+    </h:head>
+    <h:body>
+
+        <h:link value="Menu Principal" outcome="index.html"/>
+        <br/>
+        <br/>
+        <h3>Cadastro de Linha</h3>
+        <br/>
+
+        <h:form id="formLinha" class="form-horizontal">
+            <h:inputHidden value="#{linhaBean.linha.id}"/>
+            <div class="control-group">
+                <div class="controls">
+                    DISTÂNCIA*<h:inputText id="distancia" value="#{linhaBean.linha.distancia}" required="true" requiredMessage="Campo Obrigatório"/>KM<br/>
+                    <h:message for="distancia"/>
+                </div>
+            </div>
+            <div class="control-group">
+                <div class="controls">
+                    PREÇO*<h:inputText id="preco" value="#{linhaBean.linha.preco}" required="true" requiredMessage="Campo Obrigatório"/><br/>
+                    <h:message for="preco"/>
+                </div>
+            </div>
+            <div class="control-group">
+                <div class="controls">
+                    Origem*
+                    <h:selectOneMenu id="origem" value="#{linhaBean.origem.id}" required="true" requiredMessage="Campo Obrigatório">
+                        <f:selectItem itemLabel="Selecione..."/>
+                        <f:selectItems value="#{enderecoBean.enderecos}" var="endOrigem" itemLabel="#{endOrigem.cidade.nome} - #{endOrigem.rua}, #{endOrigem.numero}" itemValue="#{endOrigem.id}"/>
+                    </h:selectOneMenu>
+                    <h:message for="origem"/>
+                    <br/>
+                </div>
+            </div>
+            <div class="control-group">
+                <div class="controls">
+                    Destino*
+                    <h:selectOneMenu id="destino" value="#{linhaBean.destino.id}" required="true" requiredMessage="Campo Obrigatório">
+                        <f:selectItem itemLabel="Selecione..."/>
+                        <f:selectItems value="#{enderecoBean.enderecos}" var="endDestino" itemLabel="#{endDestino.cidade.nome} - #{endDestino.rua} - #{endDestino.numero}" itemValue="#{endDestino.id}"/>
+                    </h:selectOneMenu>
+                    <h:message for="destino"/>
+                    <br/>
+                    <br/>
+                    <h:link value="Cadastrar Endereço" outcome="manterEndereco"/>
+                </div>
+            </div>
+            <h:messages for="formLinha"/><br/>
+
+            <h:commandButton value="Inserir" class="button2" action="#{linhaBean.inserir()}"/>
+
+            <h:commandButton value="Alterar" class="button2" action="#{linhaBean.alterar()}"/>
+
+            <h:commandButton value="Excluir" class="button2" action="#{linhaBean.excluir()}"/>
+        </h:form>
+        <br/>
+
+        <h:dataTable value="#{linhaBean.linhas}" var="lin" border="1">
+            <h:column>
+                <f:facet name="header"><h:outputText value="ID" /></f:facet>
+                <h:outputText value="#{lin.id}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header"><h:outputText value="ORIGEM - DESTINO" /></f:facet>
+                <h:form>
+                    <h:commandLink value=" #{lin.origem.cidade.nome} -  #{lin.origem.rua}, #{lin.origem.numero} --->  #{lin.destino.cidade.nome} -  #{lin.destino.rua}, #{lin.destino.numero}"> 
+                        <f:setPropertyActionListener target="#{linhaBean.linha}" value="#{lin}"/>
+                    </h:commandLink>
+                </h:form>
+            </h:column>
+            <h:column>
+                <f:facet name="header"><h:outputText value="DISTÂNCIA" /></f:facet>
+                <h:outputText value="#{lin.distancia}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header"><h:outputText value="PREÇO" /></f:facet>
+                <h:outputText value="#{lin.preco}"/>
+                <!--f:convertNumber pattern="R$ #0.00"/-->
+            </h:column>
+        </h:dataTable>
+
+    </h:body>
+</html>
+

@@ -1,0 +1,94 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <title>Cadastro de Finanças</title>
+        <!--  Favicon / -->
+        <link rel="shortcut icon" href="favicon.png" type="image/x-icon" />
+        <link rel="stylesheet" href="${pageContext.request.contextPath}css.css" />
+        <link rel="stylesheet" href="css/gumby.css"/>   <!-- Gumby Framework /-->
+        <link rel="stylesheet" href="css/style.css"/>   <!-- Main stylesheet /-->
+    </h:head>
+    <h:body>
+        <h:link value="Menu Principal" outcome="index.html"/>
+        <br/>
+        <br/>
+        <h3>Cadastro de Finanças</h3>
+        <br/>
+        <h:form id="formFinanca" class="form-horizontal">
+
+            <h:inputHidden id="id" value="#{financaBean.financa.id}"/>
+
+            <div class="control-group">
+                <div class="controls">
+
+                    Nome*<h:inputText id="nome" value="#{financaBean.financa.nome}" required="true" requiredMessage="Campo Obrigatório"/><br/>
+                </div>
+            </div>
+            <div class="control-group">
+                <div class="controls">
+
+                    Tipo*<h:inputText id="tipo" value="#{financaBean.financa.tipo}" required="true" requiredMessage="Campo Obrigatório"/><br/>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <div class="controls">
+
+                    Valor*<h:inputText id="valor" value="#{financaBean.financa.valor}" required="true" requiredMessage="Campo Obrigatório"/><br/>
+                    <h:message for="valor"/>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <div class="controls">
+                    Descrição<h:inputTextarea id="descricao"  value="#{financaBean.financa.descricao}"/><br/>
+                    <h:message for="descricao"/>
+                </div>
+            </div>
+            <h:messages for="formFinanca"/><br/>
+            
+            <h:commandButton value="Inserir" class="button2" action="#{financaBean.inserir()}"/>
+
+            <h:commandButton value="Alterar" class="button2" action="#{financaBean.alterar()}"/>
+
+            <h:commandButton value="Excluir" class="button2" action="#{financaBean.excluir()}"/>
+
+
+        </h:form>
+        <br/>
+        <h:dataTable value="#{financaBean.financas}" var="fin" border="1">
+            <h:column>
+                <f:facet name="header"><h:outputText value="ID" /></f:facet>
+                <h:outputText value="#{fin.id}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header"><h:outputText value="NOME" /></f:facet>
+                <h:form>
+                    <h:commandLink value="#{fin.nome}">                     
+                        <f:setPropertyActionListener target="#{financaBean.financa}" value="#{fin}"/>
+                    </h:commandLink>
+                </h:form>
+            </h:column>
+            <h:column>
+                <f:facet name="header"><h:outputText value="TIPO" /></f:facet>
+                <h:outputText value="#{fin.tipo}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header"><h:outputText value="DATA" /></f:facet>
+                <h:outputText value="#{fin.dat}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header"><h:outputText value="VALOR" /></f:facet>
+                <h:outputText value="#{fin.valor}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header"><h:outputText value="DESCRIÇÃO" /></f:facet>
+                <h:outputText value="#{fin.descricao}"/>
+            </h:column>
+        </h:dataTable>
+    </h:body>
+</html>
+
