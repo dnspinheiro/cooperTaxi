@@ -8,6 +8,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import modelo.Cidade;
 import dao.CidadeJpaController;
+import dao.EstadoJpaController;
 import dao.exceptions.NonexistentEntityException;
 import java.util.List;
 import java.util.logging.Level;
@@ -31,6 +32,7 @@ public class CidadeBean {
     private Cidade cidade = new Cidade();
     private Estado estado = new Estado();
     CidadeJpaController daoCidade = new CidadeJpaController(JPAUtil.factory);
+    EstadoJpaController daoEstado = new EstadoJpaController(JPAUtil.factory);
     
     private String mensagem;
 
@@ -86,6 +88,7 @@ public class CidadeBean {
     }
 
     public void setCidade(Cidade cidade) {
+        setEstado(cidade.getEstado());
         this.cidade = cidade;
     }
 
@@ -107,5 +110,9 @@ public class CidadeBean {
 
     public void setMensagem(String mensagem) {
         this.mensagem = mensagem;
+    }
+    
+    public List<Estado> getEstados(){
+        return daoEstado.findEstadoEntities();    
     }
 }

@@ -94,6 +94,8 @@ public class LinhaBean {
     }
 
     public void setLinha(Linha linha) {
+        setOrigem(linha.getOrigem());
+        setDestino(linha.getDestino());
         this.linha = linha;
     }
     

@@ -93,6 +93,7 @@ public class FuncionarioBean {
     }
 
     public void setFuncionario(Funcionario funcionario) {
+        setEndereco(funcionario.getEndereco());
         this.funcionario = funcionario;
     }
 

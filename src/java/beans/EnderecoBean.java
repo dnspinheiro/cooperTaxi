@@ -4,6 +4,7 @@
  */
 package beans;
 
+import dao.CidadeJpaController;
 import dao.EnderecoJpaController;
 import dao.exceptions.NonexistentEntityException;
 import java.util.List;
@@ -32,6 +33,7 @@ public class EnderecoBean {
     private Cidade cidade = new Cidade();
     
     EnderecoJpaController daoEndereco = new EnderecoJpaController(JPAUtil.factory);
+    CidadeJpaController daoCidade = new CidadeJpaController(JPAUtil.factory);
     
     private String mensagem;
 
@@ -87,6 +89,7 @@ public class EnderecoBean {
     }
 
     public void setEndereco(Endereco endereco) {
+        setCidade(endereco.getCidade());
         this.endereco = endereco;
     }
     
@@ -108,5 +111,9 @@ public class EnderecoBean {
 
     public void setMensagem(String mensagem) {
         this.mensagem = mensagem;
+    }
+    
+    public List<Cidade> getCidades(){
+        return daoCidade.findCidadeEntities();
     }
 }

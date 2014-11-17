@@ -114,18 +114,6 @@ public class ViagemClienteJpaController implements Serializable {
             }
         }
     }
-    
-    public Long  pesquisarViagemid(Long id){
-
-        EntityManager em = getEntityManager();
-        Query query = em.createQuery("SELECT id FROM ViagemCliente  WHERE VIAGEM_ID = :m");
-        query.setParameter("m", id);
-        List<String>  rsl = query.getResultList();
-        String g = rsl.toString();
-        String result = g.replace(" ", "-").substring(1, g.length()-1);
-        id = Long.parseLong(result);
-        return id;
-    }
 
     public void destroy(Long id) throws NonexistentEntityException {
         EntityManager em = null;

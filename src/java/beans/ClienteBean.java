@@ -6,6 +6,7 @@ package beans;
 
 import modelo.Cliente;
 import dao.ClienteJpaController;
+import dao.EnderecoJpaController;
 import dao.exceptions.NonexistentEntityException;
 import java.util.List;
 import java.util.logging.Level;
@@ -32,6 +33,7 @@ public class ClienteBean {
     private Endereco endereco = new Endereco();
     
     ClienteJpaController daoCliente = new ClienteJpaController(JPAUtil.factory);
+    EnderecoJpaController daoEndereco = new EnderecoJpaController(JPAUtil.factory);
     
     private String mensagem;
 
@@ -91,6 +93,7 @@ public class ClienteBean {
     }
 
     public void setCliente(Cliente cliente) {
+        setEndereco(cliente.getEndereco());
         this.cliente = cliente;
     }
 
@@ -112,5 +115,9 @@ public class ClienteBean {
 
     public void setMensagem(String mensagem) {
         this.mensagem = mensagem;
+    }
+    
+    public List<Endereco> getEnderecos(){
+        return daoEndereco.findEnderecoEntities();
     }
 }

@@ -7,7 +7,6 @@ package beans;
 import dao.ViagemClienteJpaController;
 import dao.ViagemJpaController;
 import dao.exceptions.NonexistentEntityException;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
@@ -40,11 +39,9 @@ public class ViagemBean {
     private Funcionario funcionario = new Funcionario();
     private Cliente cliente = new Cliente();
     private Veiculo veiculo = new Veiculo();
-    private ViagemCliente viagemCliente = new ViagemCliente();
-    
     ViagemClienteJpaController daoViagemCliente = new ViagemClienteJpaController(JPAUtil.factory);
+    private ViagemCliente viagemCliente = new ViagemCliente();
     ViagemJpaController daoViagem = new ViagemJpaController(JPAUtil.factory);
-    
     private List<Cliente> clientes;
     private String mensagem;
 

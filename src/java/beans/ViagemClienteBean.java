@@ -109,24 +109,20 @@ public class ViagemClienteBean {
         }
     }
 
-    
-public void excluir() {
+    public void excluir() {
         FacesContext context = FacesContext.getCurrentInstance();
-        Long id = viagemClienteDAO.pesquisarViagemid(viagem.getId());
-        
         try {
-            viagemClienteDAO.destroy(id);
             daoViagem.destroy(viagem.getId());
-            funcionario = new Funcionario();
-            linha = new Linha();
-            veiculo = new Veiculo();
+            viagemClienteDAO.destroy(viagemCliente.getId());
+            cliente = new Cliente();
             viagem = new Viagem();
+            viagemCliente = new ViagemCliente();
+            context.addMessage("formViagem", new FacesMessage("Viagem foi exculida com sucesso!"));
         } catch (Exception ex) {
             context.addMessage("formViagem", new FacesMessage("Viagem não foi excluida!"));
             Logger.getLogger(ViagemClienteBean.class.getName()).log(Level.SEVERE, null, ex);
         }
-        context.addMessage("formViagem", new FacesMessage("Viagem foiexculida com sucesso!"));
-}
+    }
 
     public ViagemCliente getViagemCliente() {
         return viagemCliente;
@@ -153,6 +149,9 @@ public void excluir() {
     }
 
     public void setViagem(Viagem viagem) {
+        setLinha(viagem.getLinha());
+        setFuncionario(viagem.getFunc());
+        setVeiculo(viagem.getVeiculo());
         this.viagem = viagem;
     }
 
