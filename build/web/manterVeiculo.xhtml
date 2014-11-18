@@ -86,32 +86,59 @@
             </h:column>
             <h:column>
                 <f:facet name="header"><h:outputText value="ESTILO" /></f:facet>
-                <h:outputText value="#{vei.estilo}"/>
+                <h:form>
+                    <h:commandLink value="#{vei.estilo}">                        
+                        <f:setPropertyActionListener target="#{veiculoBean.veiculo}" value="#{vei}"/>
+                    </h:commandLink>
+                </h:form>
             </h:column>
             <h:column>
                 <f:facet name="header"><h:outputText value="COR" /></f:facet>
-                <h:outputText value="#{vei.cor}"/>
+                <h:form>
+                    <h:commandLink value="#{vei.cor}">                        
+                        <f:setPropertyActionListener target="#{veiculoBean.veiculo}" value="#{vei}"/>
+                    </h:commandLink>
+                </h:form>
             </h:column>
             <h:column>
                 <f:facet name="header"><h:outputText value="ESTILO" /></f:facet>
-                <h:outputText value="#{vei.estilo}"/>
+                <h:form>
+                    <h:commandLink value="#{vei.estilo}">                        
+                        <f:setPropertyActionListener target="#{veiculoBean.veiculo}" value="#{vei}"/>
+                    </h:commandLink>
+                </h:form>
             </h:column>
-
             <h:column>
                 <f:facet name="header"><h:outputText value="MARCA" /></f:facet>
-                <h:outputText value="#{vei.marca}"/>
+                <h:form>
+                    <h:commandLink value="#{vei.marca}">                        
+                        <f:setPropertyActionListener target="#{veiculoBean.veiculo}" value="#{vei}"/>
+                    </h:commandLink>
+                </h:form>
             </h:column>
             <h:column>
                 <f:facet name="header"><h:outputText value="ANO" /></f:facet>
-                <h:outputText value="#{vei.ano}"/>
+                <h:form>
+                    <h:commandLink value="#{vei.ano}">                        
+                        <f:setPropertyActionListener target="#{veiculoBean.veiculo}" value="#{vei}"/>
+                    </h:commandLink>
+                </h:form>
             </h:column>
             <h:column>
                 <f:facet name="header"><h:outputText value="CAPACIDADE" /></f:facet>
-                <h:outputText value="#{vei.capacidade}"/>
+                <h:form>
+                    <h:commandLink value="#{vei.capacidade}">                        
+                        <f:setPropertyActionListener target="#{veiculoBean.veiculo}" value="#{vei}"/>
+                    </h:commandLink>
+                </h:form>
             </h:column>
             <h:column>
                 <f:facet name="header"><h:outputText value="PORTAS" /></f:facet>
-                <h:outputText value="#{vei.quantPortas}"/>
+                <h:form>
+                    <h:commandLink value="#{vei.quantPortas}">                        
+                        <f:setPropertyActionListener target="#{veiculoBean.veiculo}" value="#{vei}"/>
+                    </h:commandLink>
+                </h:form>
             </h:column>
         </h:dataTable>
 

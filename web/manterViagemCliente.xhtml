@@ -23,6 +23,7 @@
         <h:form id="formViagem" class="form-horizontal">
 
             <h:inputHidden value="#{viagemClienteBean.viagem.id}"/>
+            <h:inputHidden value="#{viagemClienteBean.viagemCliente.id}"/>
 
             <div class="control-group">
                 <div class="controls">
@@ -42,7 +43,7 @@
                         <f:selectItems value="#{linhaBean.linhas}" var="lin" itemLabel="#{lin.origem.rua} - #{lin.destino.rua}" itemValue="#{lin.id}"/>
                     </h:selectOneMenu>
                 </div>
-            </div>
+            </div>            
             <div class="control-group">
                 <div class="controls">
                     Veículo*
@@ -53,6 +54,35 @@
                 </div>
             </div>
             
+                FINANÇA
+            <div class="control-group">
+                <div class="controls">
+                    DESCRIÇÂO <h:inputText id="descricao" value="#{viagemClienteBean.financa.descricao}"/><br/>
+                    <h:message for="descricao"/>
+                </div>
+            </div>
+            
+            <div class="control-group">
+                <div class="controls">
+                    NOME <h:inputText id="nome" value="#{viagemClienteBean.financa.nome}"/><br/>
+                    <h:message for="nome"/>
+                </div>
+            </div>
+            
+            <div class="control-group">
+                <div class="controls">
+                    TIPO <h:inputText id="tipo" value="#{viagemClienteBean.financa.tipo}"/><br/>
+                    <h:message for="tipo"/>
+                </div>
+            </div>
+                
+            <div class="control-group">
+                <div class="controls">
+                    VALOR <h:inputText id="valor" value="#{viagemClienteBean.financa.valor}"/><br/>
+                    <h:message for="valor"/>
+                </div>
+            </div>
+
             <div class="control-group">
                 <div class="controls">
                     Cliente*
@@ -80,7 +110,7 @@
                 <f:facet name="header"><h:outputText value="ID" /></f:facet>
                 <h:form>
                     <h:commandLink value=" #{via.viagem.id}"> 
-                        <f:setPropertyActionListener target="#{viagemClienteBean.viagem}" value="#{via.viagem}"/>
+                        <f:setPropertyActionListener target="#{viagemClienteBean.viagemCliente}" value="#{via}"/>
                     </h:commandLink>
                 </h:form>
             </h:column>
@@ -92,15 +122,15 @@
                                    #{via.viagem.linha.origem.rua} --->  
                                    #{via.viagem.linha.destino.cidade.nome} -  
                                    #{via.viagem.linha.destino.rua}"> 
-                        <f:setPropertyActionListener target="#{viagemClienteBean.viagem}" value="#{via.viagem}"/>
+                        <f:setPropertyActionListener target="#{viagemClienteBean.viagemCliente}" value="#{via}"/>
                     </h:commandLink>
                 </h:form>
             </h:column>
             <h:column>
                 <f:facet name="header"><h:outputText value="DATA" /></f:facet>
                 <h:form>
-                    <h:commandLink value=" #{via.viagem.dat}"> 
-                        <f:setPropertyActionListener target="#{viagemClienteBean.viagem}" value="#{via.viagem}"/>
+                    <h:commandLink value=" #{via.viagem.dat}">
+                        <f:setPropertyActionListener target="#{viagemClienteBean.viagemCliente}" value="#{via}"/>
                     </h:commandLink>
                 </h:form>
             </h:column>
@@ -108,7 +138,39 @@
                 <f:facet name="header"><h:outputText value="FUNCIONÁRIO" /></f:facet>
                 <h:form>
                     <h:commandLink value=" #{via.viagem.func.nome}"> 
-                        <f:setPropertyActionListener target="#{viagemClienteBean.viagem}" value="#{via.viagem}"/>
+                        <f:setPropertyActionListener target="#{viagemClienteBean.viagemCliente}" value="#{via}"/>
+                    </h:commandLink>
+                </h:form>
+            </h:column>
+             <h:column>
+                <f:facet name="header"><h:outputText value="Descrição" /></f:facet>
+                <h:form>    
+                    <h:commandLink value=" #{via.viagem.financa.descricao}">
+                        <f:setPropertyActionListener target="#{viagemClienteBean.viagemCliente}" value="#{via}"/>
+                    </h:commandLink>
+                </h:form>
+            </h:column>
+             <h:column>
+                <f:facet name="header"><h:outputText value="Nome" /></f:facet>
+                <h:form>    
+                    <h:commandLink value=" #{via.viagem.financa.nome}"> 
+                        <f:setPropertyActionListener target="#{viagemClienteBean.viagemCliente}" value="#{via}"/>
+                    </h:commandLink>
+                </h:form>
+            </h:column>
+             <h:column>
+                <f:facet name="header"><h:outputText value="Tipo" /></f:facet>
+                <h:form>    
+                    <h:commandLink value=" #{via.viagem.financa.tipo}"> 
+                        <f:setPropertyActionListener target="#{viagemClienteBean.viagemCliente}" value="#{via}"/>
+                    </h:commandLink>
+                </h:form>
+            </h:column>
+            <h:column>
+                <f:facet name="header"><h:outputText value="Valor" /></f:facet>
+                <h:form>    
+                    <h:commandLink value=" #{via.viagem.financa.valor}"> 
+                        <f:setPropertyActionListener target="#{viagemClienteBean.viagemCliente}" value="#{via}"/>
                     </h:commandLink>
                 </h:form>
             </h:column>
@@ -116,7 +178,7 @@
                 <f:facet name="header"><h:outputText value="VEÍCULO" /></f:facet>
                 <h:form>    
                     <h:commandLink value=" #{via.viagem.veiculo.placa}"> 
-                        <f:setPropertyActionListener target="#{viagemClienteBean.viagem}" value="#{via.viagem}"/>
+                        <f:setPropertyActionListener target="#{viagemClienteBean.viagemCliente}" value="#{via}"/>
                     </h:commandLink>
                 </h:form>
             </h:column>
@@ -124,7 +186,7 @@
                 <f:facet name="header"><h:outputText value="CLIENTE" /></f:facet>
                 <h:form>
                     <h:commandLink value=" #{via.cliente.nome}"> 
-                        <f:setPropertyActionListener target="#{viagemClienteBean.viagem}" value="#{via.viagem}"/>
+                        <f:setPropertyActionListener target="#{viagemClienteBean.viagemCliente}" value="#{via}"/>
                     </h:commandLink>
                 </h:form>
             </h:column>

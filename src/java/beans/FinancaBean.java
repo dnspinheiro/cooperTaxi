@@ -5,6 +5,7 @@
 package beans;
 
 import dao.FinancaJpaController;
+import dao.VeiculoJpaController;
 import dao.exceptions.NonexistentEntityException;
 import java.util.List;
 import java.util.logging.Level;
@@ -15,6 +16,7 @@ import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 import modelo.Financa;
 import modelo.RelatorioFinanca;
+import modelo.Veiculo;
 import util.JPAUtil;
 
 /**
@@ -29,6 +31,8 @@ public class FinancaBean {
      * Creates a new instance of FinancaBean
      */
     private Financa financa = new Financa();
+    private Veiculo veiculo = new Veiculo();
+    VeiculoJpaController daoVeiculo = new VeiculoJpaController(JPAUtil.factory);
     FinancaJpaController daoFinanca = new FinancaJpaController(JPAUtil.factory);
     private String mensagem;
 
@@ -39,8 +43,10 @@ public class FinancaBean {
         FacesContext context = FacesContext.getCurrentInstance();
         try{
         financa.setDat(new java.util.Date());
+        financa.setVeiculo(veiculo);
         daoFinanca.create(financa);
         financa = new Financa();
+        veiculo = new Veiculo();
         } catch (Exception ex) {
             context.addMessage("formFinanca", new FacesMessage("Financa não pode ser inserido"));
             Logger.getLogger(ViagemClienteBean.class.getName()).log(Level.SEVERE, null, ex);
@@ -60,8 +66,10 @@ public class FinancaBean {
         FacesContext context = FacesContext.getCurrentInstance();
         try {
             financa.setDat(new java.util.Date());
+            financa.setVeiculo(veiculo);
             daoFinanca.edit(financa);
             financa = new Financa();
+            veiculo = new Veiculo();
         } catch (NonexistentEntityException ex) {
             context.addMessage("formFinanca", new FacesMessage("Financa não pode ser alterada"));
             Logger.getLogger(FinancaBean.class.getName()).log(Level.SEVERE, null, ex);
@@ -102,5 +110,17 @@ public class FinancaBean {
 
     public void setMensagem(String mensagem) {
         this.mensagem = mensagem;
+    }
+
+    public Veiculo getVeiculo() {
+        return veiculo;
+    }
+
+    public void setVeiculo(Veiculo veiculo) {
+        this.veiculo = veiculo;
+    }
+    
+    public List<Veiculo> getVeiculos(){
+        return daoVeiculo.findVeiculoEntities();    
     }
 }

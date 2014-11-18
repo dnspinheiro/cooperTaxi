@@ -29,12 +29,6 @@
             </div>
             <div class="control-group">
                 <div class="controls">
-                    PREÇO*<h:inputText id="preco" value="#{linhaBean.linha.preco}" required="true" requiredMessage="Campo Obrigatório"/><br/>
-                    <h:message for="preco"/>
-                </div>
-            </div>
-            <div class="control-group">
-                <div class="controls">
                     Origem*
                     <h:selectOneMenu id="origem" value="#{linhaBean.origem.id}" required="true" requiredMessage="Campo Obrigatório">
                         <f:selectItem itemLabel="Selecione..."/>
@@ -88,14 +82,6 @@
                 <f:facet name="header"><h:outputText value="DISTÂNCIA" /></f:facet>
                 <h:form>
                     <h:commandLink value=" #{lin.distancia}"> 
-                        <f:setPropertyActionListener target="#{linhaBean.linha}" value="#{lin}"/>
-                    </h:commandLink>
-                </h:form>
-            </h:column>
-            <h:column>
-                <f:facet name="header"><h:outputText value="PREÇO" /></f:facet>
-                <h:form>
-                    <h:commandLink value=" #{lin.preco}"> 
                         <f:setPropertyActionListener target="#{linhaBean.linha}" value="#{lin}"/>
                     </h:commandLink>
                 </h:form>

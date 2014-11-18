@@ -5,6 +5,7 @@
 package beans;
 
 import dao.ClienteJpaController;
+import dao.FinancaJpaController;
 import dao.ViagemClienteJpaController;
 import dao.ViagemJpaController;
 import dao.exceptions.NonexistentEntityException;
@@ -17,6 +18,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 import modelo.Cliente;
+import modelo.Financa;
 import modelo.Funcionario;
 import modelo.Linha;
 import modelo.Veiculo;
@@ -36,16 +38,17 @@ public class ViagemClienteBean {
     private Cliente cliente = new Cliente();
     private Linha linha = new Linha();
     private Funcionario funcionario = new Funcionario();
+    private Financa financa = new Financa();
     private Veiculo veiculo = new Veiculo();
     private Viagem viagem = new Viagem();
     
     ViagemJpaController daoViagem = new ViagemJpaController(JPAUtil.factory);
+    FinancaJpaController daoFinanca = new FinancaJpaController(JPAUtil.factory);
     ViagemClienteJpaController viagemClienteDAO = new ViagemClienteJpaController(JPAUtil.factory);
     ClienteJpaController daoCliente = new ClienteJpaController(JPAUtil.factory);
     
     private List<Cliente> clientes;
-
-    /**
+    /*
      * Creates a new instance of FuncionarioMB
      */
     public ViagemClienteBean() {
@@ -57,12 +60,19 @@ public class ViagemClienteBean {
             viagem.setLinha(linha);
             viagem.setFunc(funcionario);
             viagem.setVeiculo(veiculo);
+            
+            financa.setDat(new Date());
+            financa.setVeiculo(veiculo);
+            daoFinanca.create(getFinanca());
+            viagem.setFinanca(getFinanca());
+            
             viagem.setDat(new Date());
             daoViagem.create(viagem);
             viagemCliente.setCliente(cliente);
             viagemCliente.setViagem(viagem);
             viagemClienteDAO.create(viagemCliente);
             funcionario = new Funcionario();
+            financa = new Financa();
             linha = new Linha();
             viagemCliente = new ViagemCliente();
             cliente = new Cliente();
@@ -92,14 +102,22 @@ public class ViagemClienteBean {
     public void alterar() {
         FacesContext context = FacesContext.getCurrentInstance();
         try {
+            viagem.setLinha(linha);
+            viagem.setFunc(funcionario);
+            viagem.setVeiculo(veiculo);
+            viagem.setDat(new Date());
+            daoViagem.edit(viagem);
             viagemCliente.setCliente(cliente);
             viagemCliente.setViagem(viagem);
             viagemClienteDAO.edit(viagemCliente);
-            cliente = new Cliente();
-            viagem = new Viagem();
+            funcionario = new Funcionario();
+            financa = new Financa();
+            linha = new Linha();
             viagemCliente = new ViagemCliente();
-
-            clientes.clear();
+            cliente = new Cliente();
+            veiculo = new Veiculo();
+            viagem = new Viagem();
+            //clientes.clear();
         } catch (NonexistentEntityException ex) {
             context.addMessage("formViagem", new FacesMessage("Viagem não foi alterada!"));
             Logger.getLogger(LinhaBean.class.getName()).log(Level.SEVERE, null, ex);
@@ -112,11 +130,15 @@ public class ViagemClienteBean {
     public void excluir() {
         FacesContext context = FacesContext.getCurrentInstance();
         try {
-            daoViagem.destroy(viagem.getId());
             viagemClienteDAO.destroy(viagemCliente.getId());
-            cliente = new Cliente();
-            viagem = new Viagem();
+            daoViagem.destroy(viagem.getId());
+            funcionario = new Funcionario();
+            financa = new Financa();
+            linha = new Linha();
             viagemCliente = new ViagemCliente();
+            cliente = new Cliente();
+            veiculo = new Veiculo();
+            viagem = new Viagem();
             context.addMessage("formViagem", new FacesMessage("Viagem foi exculida com sucesso!"));
         } catch (Exception ex) {
             context.addMessage("formViagem", new FacesMessage("Viagem não foi excluida!"));
@@ -133,6 +155,11 @@ public class ViagemClienteBean {
     }
 
     public void setViagemCliente(ViagemCliente viagemCliente) {
+        setLinha(viagemCliente.getViagem().getLinha());
+        setFuncionario(viagemCliente.getViagem().getFunc());
+        setVeiculo(viagemCliente.getViagem().getVeiculo());
+        setViagem(viagemCliente.getViagem());
+        setCliente(viagemCliente.getCliente());
         this.viagemCliente = viagemCliente;
     }
 
@@ -149,9 +176,6 @@ public class ViagemClienteBean {
     }
 
     public void setViagem(Viagem viagem) {
-        setLinha(viagem.getLinha());
-        setFuncionario(viagem.getFunc());
-        setVeiculo(viagem.getVeiculo());
         this.viagem = viagem;
     }
 
@@ -185,5 +209,13 @@ public class ViagemClienteBean {
 
     public void setClientes(List<Cliente> clientes) {
         this.clientes = clientes;
+    }
+
+    public Financa getFinanca() {
+        return financa;
+    }
+
+    public void setFinanca(Financa financa) {
+        this.financa = financa;
     }
 }

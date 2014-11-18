@@ -24,7 +24,6 @@ public class Linha implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     
-    private Float preco;
     private Integer distancia;
     
     @ManyToOne
@@ -98,14 +97,5 @@ public class Linha implements Serializable {
 
     public void setDestino(Endereco destino) {
         this.destino = destino;
-    }
-
-    public Float getPreco() {
-        return preco;
-    }
-
-    public void setPreco(Float preco) {
-        this.preco = preco;
-    }
-    
+    }   
 }
