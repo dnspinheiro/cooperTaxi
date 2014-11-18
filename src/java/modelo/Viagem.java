@@ -13,6 +13,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 
 /**
@@ -28,6 +29,9 @@ public class Viagem implements Serializable {
 
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date dat;
+    
+    @OneToOne
+    private Financa financa;
     
     @ManyToOne
     private Linha linha;
@@ -119,5 +123,12 @@ public class Viagem implements Serializable {
     public void setViagemClientes(List<ViagemCliente> viagemClientes) {
         this.viagemClientes = viagemClientes;
     }
-    
+
+    public Financa getFinanca() {
+        return financa;
+    }
+
+    public void setFinanca(Financa financa) {
+        this.financa = financa;
+    }
 }

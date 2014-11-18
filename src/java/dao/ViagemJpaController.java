@@ -9,6 +9,7 @@ import java.io.Serializable;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import modelo.Funcionario;
+import modelo.Financa;
 import modelo.Linha;
 import modelo.Veiculo;
 import modelo.ViagemCliente;
@@ -46,6 +47,11 @@ public class ViagemJpaController implements Serializable {
             if (func != null) {
                 func = em.getReference(func.getClass(), func.getId());
                 viagem.setFunc(func);
+            }
+            Financa financa = viagem.getFinanca();
+            if (financa != null) {
+                financa = em.getReference(financa.getClass(), financa.getId());
+                viagem.setFinanca(financa);
             }
             Linha linha = viagem.getLinha();
             if (linha != null) {

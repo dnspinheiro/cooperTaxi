@@ -17,6 +17,7 @@ import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 import modelo.Cliente;
 import modelo.Funcionario;
+import modelo.Financa;
 import modelo.Linha;
 import modelo.Veiculo;
 import modelo.Viagem;
@@ -37,6 +38,7 @@ public class ViagemBean {
     private Viagem viagem = new Viagem();
     private Linha linha = new Linha();
     private Funcionario funcionario = new Funcionario();
+    private Financa financa = new Financa();
     private Cliente cliente = new Cliente();
     private Veiculo veiculo = new Veiculo();
     ViagemClienteJpaController daoViagemCliente = new ViagemClienteJpaController(JPAUtil.factory);
@@ -44,6 +46,11 @@ public class ViagemBean {
     ViagemJpaController daoViagem = new ViagemJpaController(JPAUtil.factory);
     private List<Cliente> clientes;
     private String mensagem;
+    
+    private String descricao;
+    private String tipo;
+    private String nome;
+    private Double valor;
 
     public ViagemBean() {
     }
@@ -53,6 +60,14 @@ public class ViagemBean {
         try {
             viagem.setLinha(linha);
             viagem.setFunc(funcionario);
+            
+            financa.setDat(new Date());
+            financa.setDescricao(descricao);
+            financa.setNome(nome);
+            financa.setTipo(tipo);
+            financa.setValor(valor);
+            viagem.setFinanca(financa);
+            
             viagem.setVeiculo(veiculo);
             viagem.setDat(new Date());
             daoViagem.create(viagem);
@@ -60,6 +75,7 @@ public class ViagemBean {
             getViagemCliente().setViagem(viagem);
             daoViagemCliente.create(getViagemCliente());
             funcionario = new Funcionario();
+            financa = new Financa();
             linha = new Linha();
             viagemCliente = new ViagemCliente();
             cliente = new Cliente();
@@ -82,10 +98,12 @@ public class ViagemBean {
         try {
             viagem.setLinha(linha);
             viagem.setFunc(funcionario);
+            viagem.setFinanca(financa);
             viagem.setVeiculo(veiculo);
             viagem.setDat(new Date());
             daoViagem.edit(viagem);
             funcionario = new Funcionario();
+            financa = new Financa();
             linha = new Linha();
             veiculo = new Veiculo();
             viagem = new Viagem();
@@ -104,6 +122,7 @@ public class ViagemBean {
         try {
             daoViagem.destroy(viagem.getId());
             funcionario = new Funcionario();
+            financa = new Financa();
             linha = new Linha();
             veiculo = new Veiculo();
             viagem = new Viagem();
@@ -140,6 +159,14 @@ public class ViagemBean {
 
     public void setFuncionario(Funcionario funcionario) {
         this.funcionario = funcionario;
+    }
+    
+    public Financa getFinanca() {
+        return financa;
+    }
+
+    public void setFinanca(Financa financa) {
+        this.financa = financa;
     }
 
     public Veiculo getVeiculo() {

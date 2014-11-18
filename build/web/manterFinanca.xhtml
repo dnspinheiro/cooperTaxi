@@ -48,6 +48,15 @@
                     <h:message for="descricao"/>
                 </div>
             </div>
+            <div class="control-group">
+                <div class="controls">
+                    Veículo*
+                    <h:selectOneMenu value="#{financaBean.financa.id}">
+                        <f:selectItem itemLabel="Selecione..."/>
+                        <f:selectItems value="#{financaBean.veiculos}" var="vei" itemLabel="#{vei.placa}" itemValue="#{vei.id}"/>
+                    </h:selectOneMenu>
+                </div>
+            </div>
             <h:messages for="formFinanca"/><br/>
             
             <h:commandButton value="Inserir" class="button2" action="#{financaBean.inserir()}"/>
@@ -87,6 +96,10 @@
             <h:column>
                 <f:facet name="header"><h:outputText value="DESCRIÇÃO" /></f:facet>
                 <h:outputText value="#{fin.descricao}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header"><h:outputText value="VEÍCULO" /></f:facet>
+                <h:outputText value="#{fin.veiculo.placa}"/>
             </h:column>
         </h:dataTable>
     </h:body>

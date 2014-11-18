@@ -13,6 +13,7 @@ import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import modelo.Financa;
 import modelo.RelatorioFinanca;
+import modelo.Veiculo;
 
 /**
  *
@@ -35,6 +36,13 @@ public class FinancaJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
+            
+            Veiculo veiculo = financa.getVeiculo();
+            if (veiculo != null) {
+                veiculo = em.getReference(veiculo.getClass(), veiculo.getId());
+                financa.setVeiculo(veiculo);
+            }
+            
             em.persist(financa);
             em.getTransaction().commit();
         } finally {

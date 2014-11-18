@@ -10,6 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 
 /**
@@ -28,7 +29,10 @@ public class Financa implements Serializable {
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date dat;
     
-    private Integer valor;
+    @ManyToOne
+    private Veiculo veiculo;
+    
+    private Double valor;
     
     private String nome;
     private String tipo;
@@ -94,11 +98,11 @@ public class Financa implements Serializable {
         this.dat = dat;
     }
 
-    public Integer getValor() {
+    public Double getValor() {
         return valor;
     }
 
-    public void setValor(Integer valor) {
+    public void setValor(Double valor) {
         this.valor = valor;
     }
 
@@ -116,6 +120,14 @@ public class Financa implements Serializable {
 
     public void setTipo(String tipo) {
         this.tipo = tipo;
+    }
+
+    public Veiculo getVeiculo() {
+        return veiculo;
+    }
+
+    public void setVeiculo(Veiculo veiculo) {
+        this.veiculo = veiculo;
     }
     
 }
