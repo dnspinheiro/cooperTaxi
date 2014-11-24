@@ -9,6 +9,7 @@ import dao.FinancaJpaController;
 import dao.ViagemClienteJpaController;
 import dao.ViagemJpaController;
 import dao.exceptions.NonexistentEntityException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
@@ -61,12 +62,15 @@ public class ViagemClienteBean {
             viagem.setFunc(funcionario);
             viagem.setVeiculo(veiculo);
             
-            financa.setDat(new Date());
             financa.setVeiculo(veiculo);
-            daoFinanca.create(getFinanca());
-            viagem.setFinanca(getFinanca());
+
+            //financa.setDat(new Date());
+        
+            financa.setDat(viagem.getDat());
+            setFinanca(daoFinanca.createToViagem(financa));
+            viagem.setFinanca(financa);
             
-            viagem.setDat(new Date());
+            //viagem.setDat(new Date());
             daoViagem.create(viagem);
             viagemCliente.setCliente(cliente);
             viagemCliente.setViagem(viagem);
@@ -81,23 +85,11 @@ public class ViagemClienteBean {
 
             //clientes.clear();
         } catch (Exception ex) {
-            context.addMessage("formViagem", new FacesMessage("Viagem não pode ser excluido!"));
+            context.addMessage("formViagem", new FacesMessage("Viagem não pode ser inserido!"));
             Logger.getLogger(ViagemClienteBean.class.getName()).log(Level.SEVERE, null, ex);
         }
         context.addMessage("formViagem", new FacesMessage("Viagem foi inserido com sucesso!"));
     }
-
-    /*public void inserirCliente() {
-        FacesContext context = FacesContext.getCurrentInstance();
-        try {
-            cliente = daoCliente.findCliente(cliente.getId());
-            clientes.add(cliente);
-        } catch (Exception ex) {
-            context.addMessage("formAddCliente", new FacesMessage("Cliente não foi inserido!"));
-            Logger.getLogger(ViagemClienteBean.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        context.addMessage("formAddCliente", new FacesMessage("Cliente foi inserido na viagem com sucesso!"));
-    }*/
 
     public void alterar() {
         FacesContext context = FacesContext.getCurrentInstance();
@@ -105,7 +97,10 @@ public class ViagemClienteBean {
             viagem.setLinha(linha);
             viagem.setFunc(funcionario);
             viagem.setVeiculo(veiculo);
-            viagem.setDat(new Date());
+            //viagem.setDat(new Date());
+            
+            viagem.setFinanca(financa);
+            
             daoViagem.edit(viagem);
             viagemCliente.setCliente(cliente);
             viagemCliente.setViagem(viagem);
@@ -132,6 +127,7 @@ public class ViagemClienteBean {
         try {
             viagemClienteDAO.destroy(viagemCliente.getId());
             daoViagem.destroy(viagem.getId());
+            daoFinanca.destroy(financa.getId());
             funcionario = new Funcionario();
             financa = new Financa();
             linha = new Linha();
@@ -144,6 +140,11 @@ public class ViagemClienteBean {
             context.addMessage("formViagem", new FacesMessage("Viagem não foi excluida!"));
             Logger.getLogger(ViagemClienteBean.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    
+    public String formatarData(Date d){
+        SimpleDateFormat formatador = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        return formatador.format(d);
     }
 
     public ViagemCliente getViagemCliente() {
@@ -160,6 +161,7 @@ public class ViagemClienteBean {
         setVeiculo(viagemCliente.getViagem().getVeiculo());
         setViagem(viagemCliente.getViagem());
         setCliente(viagemCliente.getCliente());
+        setFinanca(viagemCliente.getViagem().getFinanca());
         this.viagemCliente = viagemCliente;
     }
 

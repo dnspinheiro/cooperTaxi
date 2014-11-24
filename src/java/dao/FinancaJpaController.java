@@ -43,6 +43,7 @@ public class FinancaJpaController implements Serializable {
                 financa.setVeiculo(veiculo);
             }
             
+            financa.setTipo("Despesa");
             em.persist(financa);
             em.getTransaction().commit();
         } finally {
@@ -50,6 +51,30 @@ public class FinancaJpaController implements Serializable {
                 em.close();
             }
         }
+    }
+    
+    public Financa createToViagem(Financa financa) {
+        financa.setId(null);
+        EntityManager em = null;
+        try {
+            em = getEntityManager();
+            em.getTransaction().begin();
+            
+            Veiculo veiculo = financa.getVeiculo();
+            if (veiculo != null) {
+                veiculo = em.getReference(veiculo.getClass(), veiculo.getId());
+                financa.setVeiculo(veiculo);
+            }
+            
+            financa.setTipo("Receita");
+            em.persist(financa);
+            em.getTransaction().commit();
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+        return financa;
     }
     
     public List<RelatorioFinanca> pesquisarInfoFinanca() {

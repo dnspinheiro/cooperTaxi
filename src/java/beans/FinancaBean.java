@@ -12,6 +12,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 import modelo.Financa;
@@ -42,7 +44,8 @@ public class FinancaBean {
     public void inserir() {
         FacesContext context = FacesContext.getCurrentInstance();
         try{
-        financa.setDat(new java.util.Date());
+
+        //financa.setDat(new Date());
         financa.setVeiculo(veiculo);
         daoFinanca.create(financa);
         financa = new Financa();
@@ -65,11 +68,11 @@ public class FinancaBean {
     public void alterar() {
         FacesContext context = FacesContext.getCurrentInstance();
         try {
-            financa.setDat(new java.util.Date());
             financa.setVeiculo(veiculo);
             daoFinanca.edit(financa);
             financa = new Financa();
             veiculo = new Veiculo();
+            context.addMessage("formFinanca", new FacesMessage("Financa foi alterada com sucesso!"));
         } catch (NonexistentEntityException ex) {
             context.addMessage("formFinanca", new FacesMessage("Financa não pode ser alterada"));
             Logger.getLogger(FinancaBean.class.getName()).log(Level.SEVERE, null, ex);
@@ -77,7 +80,6 @@ public class FinancaBean {
             context.addMessage("formFinanca", new FacesMessage("Financa não pode ser alterada"));
             Logger.getLogger(FinancaBean.class.getName()).log(Level.SEVERE, null, ex);
         }
-        context.addMessage("formFinanca", new FacesMessage("Financa foi alterada com sucesso!"));
     }
 
     public void excluir() {
@@ -85,11 +87,17 @@ public class FinancaBean {
         try {
             daoFinanca.destroy(financa.getId());
             financa = new Financa();
+            veiculo = new Veiculo();
+            context.addMessage("formFinanca", new FacesMessage("Financa foi excluido com sucesso!"));
         } catch (Exception ex) {
             context.addMessage("formFinanca", new FacesMessage("Financa não pode ser excluido"));
             Logger.getLogger(FinancaBean.class.getName()).log(Level.SEVERE, null, ex);
         }
-        context.addMessage("formFinanca", new FacesMessage("Financa foi excluido com sucesso!"));
+    }
+    
+    public String formatarData(Date d){
+        SimpleDateFormat formatador = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        return formatador.format(d);
     }
 
     public Financa getFinanca() {
@@ -97,6 +105,7 @@ public class FinancaBean {
     }
 
     public void setFinanca(Financa financa) {
+        setVeiculo(financa.getVeiculo());
         this.financa = financa;
     }
 

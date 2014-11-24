@@ -35,7 +35,7 @@ public class Veiculo implements Serializable {
     
     private String estilo;
     
-    private int quantPortas;
+    private Integer quantPortas;
     
     @OneToMany
     private List<Viagem> viagens;
@@ -132,14 +132,14 @@ public class Veiculo implements Serializable {
     /**
      * @return the quantPortas
      */
-    public int getQuantPortas() {
+    public Integer getQuantPortas() {
         return quantPortas;
     }
 
     /**
      * @param quantPortas the quantPortas to set
      */
-    public void setQuantPortas(int quantPortas) {
+    public void setQuantPortas(Integer quantPortas) {
         this.quantPortas = quantPortas;
     }
 

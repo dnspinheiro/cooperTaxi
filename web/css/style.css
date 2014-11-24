@@ -196,10 +196,17 @@ p a:hover {
     color: #000;
 }
 
+.icon-cadastro{
+    float: left;
+    height: 25px;
+    width: 25px;
+    margin: 0 0 0 70px;
+}
+
 .button2:hover {
-	background-color: #51A351;
+	background-color: #000;
     color: #000;
-    background-position: 0 -7px;
+    background-position: 0 -4px;
     -webkit-transition: all 0.2s ease-in-out;
     -moz-transition: all 0.2s ease-in-out;
     -ms-transition: all 0.2s ease-in-out;
@@ -731,7 +738,7 @@ and (max-width : 568px) {
   	
   	.download-button {text-align: center; float: inherit;  margin: 0 auto; }
 		
-	#header .button, .button2 {font-size:12px; }
+	#header .button, .button2 {font-size:10px; }
 	
 	#header .twelve.columns { margin-top:40px; text-align: center;  }
 		

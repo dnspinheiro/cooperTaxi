@@ -24,13 +24,7 @@
             <div class="control-group">
                 <div class="controls">
 
-                    Nome*<h:inputText id="nome" value="#{financaBean.financa.nome}" required="true" requiredMessage="Campo Obrigatório"/><br/>
-                </div>
-            </div>
-            <div class="control-group">
-                <div class="controls">
-
-                    Tipo*<h:inputText id="tipo" value="#{financaBean.financa.tipo}" required="true" requiredMessage="Campo Obrigatório"/><br/>
+                    Data*<h:inputText id="data" value="#{financaBean.financa.dat}" converter="javax.faces.DateTime"/><br/>
                 </div>
             </div>
 
@@ -50,8 +44,8 @@
             </div>
             <div class="control-group">
                 <div class="controls">
-                    Veículo*
-                    <h:selectOneMenu value="#{financaBean.financa.id}">
+                    VEÍCULO*
+                    <h:selectOneMenu value="#{financaBean.veiculo.id}">
                         <f:selectItem itemLabel="Selecione..."/>
                         <f:selectItems value="#{financaBean.veiculos}" var="vei" itemLabel="#{vei.placa}" itemValue="#{vei.id}"/>
                     </h:selectOneMenu>
@@ -74,16 +68,12 @@
                 <h:outputText value="#{fin.id}"/>
             </h:column>
             <h:column>
-                <f:facet name="header"><h:outputText value="NOME" /></f:facet>
+                <f:facet name="header"><h:outputText value="TIPO" /></f:facet>
                 <h:form>
-                    <h:commandLink value="#{fin.nome}">                     
+                    <h:commandLink value="#{fin.tipo}">                     
                         <f:setPropertyActionListener target="#{financaBean.financa}" value="#{fin}"/>
                     </h:commandLink>
                 </h:form>
-            </h:column>
-            <h:column>
-                <f:facet name="header"><h:outputText value="TIPO" /></f:facet>
-                <h:outputText value="#{fin.tipo}"/>
             </h:column>
             <h:column>
                 <f:facet name="header"><h:outputText value="DATA" /></f:facet>

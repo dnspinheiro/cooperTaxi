@@ -6,6 +6,7 @@ package modelo;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.text.SimpleDateFormat;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -26,16 +27,24 @@ public class Financa implements Serializable {
     
     private String descricao;
     
-    @Temporal(javax.persistence.TemporalType.DATE)
+    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date dat;
+    
+    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
+    private Date horaSaida;
     
     @ManyToOne
     private Veiculo veiculo;
     
     private Double valor;
     
-    private String nome;
     private String tipo;
+    
+    public String formatarData(Date d){
+        SimpleDateFormat formatador = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        String data = formatador.format(d);
+        return data;
+    }
 
     public Long getId() {
         return id;
@@ -106,14 +115,6 @@ public class Financa implements Serializable {
         this.valor = valor;
     }
 
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
     public String getTipo() {
         return tipo;
     }
@@ -128,6 +129,14 @@ public class Financa implements Serializable {
 
     public void setVeiculo(Veiculo veiculo) {
         this.veiculo = veiculo;
+    }
+
+    public Date getHoraSaida() {
+        return horaSaida;
+    }
+
+    public void setHoraSaida(Date horaSaida) {
+        this.horaSaida = horaSaida;
     }
     
 }
