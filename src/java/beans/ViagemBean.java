@@ -63,7 +63,6 @@ public class ViagemBean {
             
             financa.setDat(new Date());
             financa.setDescricao(descricao);
-            financa.setNome(nome);
             financa.setTipo(tipo);
             financa.setValor(valor);
             viagem.setFinanca(financa);

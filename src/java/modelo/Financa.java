@@ -30,9 +30,6 @@ public class Financa implements Serializable {
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date dat;
     
-    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
-    private Date horaSaida;
-    
     @ManyToOne
     private Veiculo veiculo;
     
@@ -129,14 +126,5 @@ public class Financa implements Serializable {
 
     public void setVeiculo(Veiculo veiculo) {
         this.veiculo = veiculo;
-    }
-
-    public Date getHoraSaida() {
-        return horaSaida;
-    }
-
-    public void setHoraSaida(Date horaSaida) {
-        this.horaSaida = horaSaida;
-    }
-    
+    }    
 }

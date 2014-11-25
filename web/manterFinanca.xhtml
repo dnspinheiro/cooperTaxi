@@ -20,11 +20,13 @@
         <h:form id="formFinanca" class="form-horizontal">
 
             <h:inputHidden id="id" value="#{financaBean.financa.id}"/>
+            <h:inputHidden id="tipo" value="#{financaBean.financa.tipo}"/>
 
             <div class="control-group">
                 <div class="controls">
-
-                    Data*<h:inputText id="data" value="#{financaBean.financa.dat}" converter="javax.faces.DateTime"/><br/>
+                    Data/Hora*<h:inputText id="data" value="#{financaBean.financa.dat}"><br/>
+                        <f:convertDateTime pattern="dd/MM/yyyy HH:mm" dateStyle="long"/> </h:inputText>
+                    <h:message for="data"/>
                 </div>
             </div>
 
@@ -47,7 +49,7 @@
                     VEÍCULO*
                     <h:selectOneMenu value="#{financaBean.veiculo.id}">
                         <f:selectItem itemLabel="Selecione..."/>
-                        <f:selectItems value="#{financaBean.veiculos}" var="vei" itemLabel="#{vei.placa}" itemValue="#{vei.id}"/>
+                        <f:selectItems value="#{financaBean.veiculos}" var="vei" itemLabel="#{vei.estilo} - #{vei.placa}" itemValue="#{vei.id}"/>
                     </h:selectOneMenu>
                 </div>
             </div>
@@ -76,8 +78,12 @@
                 </h:form>
             </h:column>
             <h:column>
-                <f:facet name="header"><h:outputText value="DATA" /></f:facet>
-                <h:outputText value="#{fin.dat}"/>
+                <f:facet name="header"><h:outputText value="DATA/HORA" /></f:facet>
+                <h:form>
+                    <h:commandLink value=" #{fin.dat}">
+                        <f:setPropertyActionListener target="#{financaBean.financa}" value="#{fin}"/>
+                    </h:commandLink>
+                </h:form>
             </h:column>
             <h:column>
                 <f:facet name="header"><h:outputText value="VALOR" /></f:facet>
@@ -89,7 +95,7 @@
             </h:column>
             <h:column>
                 <f:facet name="header"><h:outputText value="VEÍCULO" /></f:facet>
-                <h:outputText value="#{fin.veiculo.placa}"/>
+                <h:outputText value="#{fin.veiculo.estilo} - #{fin.veiculo.placa}"/>
             </h:column>
         </h:dataTable>
     </h:body>
