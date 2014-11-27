@@ -18,7 +18,12 @@ import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 import modelo.Financa;
 import modelo.RelatorioFinanca;
+import modelo.RelatorioVeiculo;
 import modelo.Veiculo;
+import org.primefaces.model.chart.Axis;
+import org.primefaces.model.chart.AxisType;
+import org.primefaces.model.chart.BarChartModel;
+import org.primefaces.model.chart.ChartSeries;
 import util.JPAUtil;
 
 /**

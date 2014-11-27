@@ -13,6 +13,7 @@ import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import modelo.Financa;
 import modelo.RelatorioFinanca;
+import modelo.RelatorioFinancaVeiculo;
 import modelo.Veiculo;
 
 /**
@@ -161,6 +162,28 @@ public class FinancaJpaController implements Serializable {
         try {
             
             Query q = em.createQuery("select NEW modelo.RelatorioFinanca(v.placa, f.valor, f.dat) from Financa f, Veiculo v where v.id = f.veiculo.id and f.tipo = 'Receita'");
+            return q.getResultList();
+        } finally {
+            em.close();
+        }
+    }
+    
+    public List<RelatorioFinancaVeiculo> pesquisarDespesaVeiculos(){
+        EntityManager em = getEntityManager();
+        try {
+            
+            Query q = em.createQuery("select NEW modelo.RelatorioFinancaVeiculo(v.placa, sum(f.valor)) from Financa f, Veiculo v where v.id=f.veiculo.id and f.tipo='Despesa' group by v.placa");
+            return q.getResultList();
+        } finally {
+            em.close();
+        }
+    }
+    
+    public List<RelatorioFinancaVeiculo> pesquisarReceitaVeiculos(){
+        EntityManager em = getEntityManager();
+        try {
+            
+            Query q = em.createQuery("select NEW modelo.RelatorioFinancaVeiculo(v.placa, sum(f.valor)) from Financa f, Veiculo v where v.id=f.veiculo.id and f.tipo='Receita' group by v.placa");
             return q.getResultList();
         } finally {
             em.close();

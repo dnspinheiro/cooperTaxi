@@ -15,6 +15,10 @@ import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 import modelo.RelatorioVeiculo;
 import modelo.Veiculo;
+import org.primefaces.model.chart.Axis;
+import org.primefaces.model.chart.AxisType;
+import org.primefaces.model.chart.BarChartModel;
+import org.primefaces.model.chart.ChartSeries;
 import util.JPAUtil;
 
 /**
@@ -29,11 +33,14 @@ public class VeiculoBean {
     private Veiculo veiculo = new Veiculo();
     
     private String mensagem;
+    
+    private BarChartModel barModel;
 
     /**
      * Creates a new instance of FuncionarioMB
      */
     public VeiculoBean() {
+        createBarModel();
     }
 
     public void inserir() {
@@ -50,6 +57,52 @@ public class VeiculoBean {
     
     public List<RelatorioVeiculo> pesquisarInfoVeiculos(){
         return veiculoDAO.pesquisarInfoVeiculo();
+    }
+    
+    public List<RelatorioVeiculo> pesquisarVeiculoQuantViagem(){
+        return veiculoDAO.pesquisarVeiculoQuantViagem();
+    }
+    
+    public BarChartModel getBarModel() {
+        return barModel;
+    }
+    
+    private BarChartModel initBarModel() {
+        BarChartModel model = new BarChartModel();
+ 
+        ChartSeries veis = new ChartSeries();
+        veis.setLabel("Km * 100");
+        
+        for(RelatorioVeiculo r : pesquisarInfoVeiculos()){
+            veis.set(r.getPlaca(), r.getDistTotal()/100);
+        }
+        
+        ChartSeries veisViagem = new ChartSeries();
+        veisViagem.setLabel("Nº de Viagens");
+        
+        for(RelatorioVeiculo r : pesquisarVeiculoQuantViagem()){
+            veisViagem.set(r.getPlaca(), r.getDistTotal());
+        }
+ 
+        model.addSeries(veis);
+        model.addSeries(veisViagem);
+         
+        return model;
+    }
+    
+    private void createBarModel() {
+        barModel = initBarModel();
+         
+        barModel.setTitle("Rodagem de Veículos");
+        barModel.setLegendPosition("ne");
+         
+        Axis xAxis = barModel.getAxis(AxisType.X);
+        xAxis.setLabel("Veículo");
+         
+        Axis yAxis = barModel.getAxis(AxisType.Y);
+        yAxis.setLabel("Km");
+        yAxis.setMin(0);
+        yAxis.setMax(25);
     }
 
     public void alterar() {

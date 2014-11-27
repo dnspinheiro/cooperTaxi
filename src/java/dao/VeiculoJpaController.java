@@ -68,7 +68,18 @@ public class VeiculoJpaController implements Serializable {
         EntityManager em = getEntityManager();
         try {
             
-            Query q = em.createQuery("select NEW modelo.RelatorioVeiculo(vei.placa, sum(l.distancia)) from Viagem v, Linha l, Veiculo vei where v.veiculo.id = vei.id and v.linha.id = l.id group by vei.placa order by sum(l.distancia) desc");
+            Query q = em.createQuery("select NEW modelo.RelatorioVeiculo(vei.placa, sum(l.distancia)) from Viagem via, Linha l, Veiculo vei where VIA.veiculo.id = VEI.id and VIA.linha.id = l.id group by vei.placa order by sum(l.distancia) desc");
+            return q.getResultList();
+        } finally {
+            em.close();
+        }
+    }
+    
+    public List<RelatorioVeiculo> pesquisarVeiculoQuantViagem(){
+        EntityManager em = getEntityManager();
+        try {
+            
+            Query q = em.createQuery("select NEW modelo.RelatorioVeiculo(vei.placa, count(vei.placa)) from Viagem via, Veiculo vei where vei.id=via.veiculo.id group by vei.placa");
             return q.getResultList();
         } finally {
             em.close();

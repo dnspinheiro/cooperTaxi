@@ -11,10 +11,13 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
-import javax.faces.bean.SessionScoped;
 import modelo.Financa;
 import modelo.RelatorioFinanca;
+import modelo.RelatorioFinancaVeiculo;
 import modelo.Veiculo;
+import org.primefaces.model.chart.Axis;
+import org.primefaces.model.chart.AxisType;
+import org.primefaces.model.chart.BarChartModel;
 import org.primefaces.model.chart.CartesianChartModel;
 import org.primefaces.model.chart.ChartSeries;
 import org.primefaces.model.chart.LineChartSeries;
@@ -25,7 +28,7 @@ import util.JPAUtil;
  * @author maycon
  */
 @ManagedBean
-@SessionScoped
+@RequestScoped
 public class despesaReceitaVeiculoBean {
 
     private double jan = 0.0; 
@@ -68,7 +71,48 @@ public class despesaReceitaVeiculoBean {
     
     private RelatorioFinanca relatorioFinanca = new RelatorioFinanca();
     
+    private BarChartModel barModel;
+        
     public despesaReceitaVeiculoBean() {
+        createBarModel();
+    }
+    
+    private void createBarModel() {
+        barModel = initBarModel();
+         
+        barModel.setTitle("Finança de Todos os Veículos");
+        barModel.setLegendPosition("ne");
+         
+        Axis xAxis = barModel.getAxis(AxisType.X);
+        xAxis.setLabel("Veículo");
+         
+        Axis yAxis = barModel.getAxis(AxisType.Y);
+        yAxis.setLabel("Receita X Despesas");
+        yAxis.setMin(0);
+        yAxis.setMax(2000);
+    }
+    
+    private BarChartModel initBarModel() {
+        BarChartModel model = new BarChartModel();
+ 
+        ChartSeries despesas = new ChartSeries();
+        
+        despesas.setLabel("Despesas");
+        for(RelatorioFinancaVeiculo r : pesquisarDespesaVeiculos()){
+            despesas.set(r.getPlaca(), r.getTotal());
+        }
+        
+        ChartSeries receitas = new ChartSeries();
+        
+        receitas.setLabel("Receitas");
+        for(RelatorioFinancaVeiculo r : pesquisarReceitaVeiculos()){
+            receitas.set(r.getPlaca(), r.getTotal());
+        }
+ 
+        model.addSeries(despesas);
+        model.addSeries(receitas);
+         
+        return model;
     }
     
     public CartesianChartModel getModelo() {    
@@ -149,22 +193,20 @@ public class despesaReceitaVeiculoBean {
         } 
     }
     
-    /*public List<Financa> gerarRelatorio(){ 
-        result = new ArrayList<Financa>();
-        for(Financa f: daoFinanca.findFinancaEntities()){
-            if (f.getVeiculo().getId().equals(veiculo.getId())){
-                result.add(f);
-            }
-        }
-        return result;     
-    }*/
-    
     public List<RelatorioFinanca> pesquisarDespesaVeiculo(){
         return daoFinanca.pesquisarDespesaVeiculo();
     }
     
     public List<RelatorioFinanca> pesquisarReceitaVeiculo(){
         return daoFinanca.pesquisarReceitaVeiculo();
+    }
+    
+    public List<RelatorioFinancaVeiculo> pesquisarDespesaVeiculos(){
+        return daoFinanca.pesquisarDespesaVeiculos();
+    }
+    
+    public List<RelatorioFinancaVeiculo> pesquisarReceitaVeiculos(){
+        return daoFinanca.pesquisarReceitaVeiculos();
     }
     
     public List<RelatorioFinanca> Relatorio(String tipo){ 
@@ -295,5 +337,7 @@ public class despesaReceitaVeiculoBean {
         this.ano = ano;
     }
     
-   
+    public BarChartModel getBarModel() {
+        return barModel;
+    }
 }

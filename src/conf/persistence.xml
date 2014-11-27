@@ -15,6 +15,7 @@
     <class>modelo.Viagem</class>
     <class>modelo.RelatorioVeiculo</class>
     <class>modelo.RelatorioEstado</class>
+    <class>modelo.RelatorioFinancaVeiculo</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="hibernate.cache.provider_class" value="org.hibernate.cache.NoCacheProvider"/>

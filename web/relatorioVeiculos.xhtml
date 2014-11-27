@@ -2,36 +2,37 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://java.sun.com/jsf/core">
     <h:head>
-        <title>Relatório de Estados</title>
+        <title>Relatório de Veículos</title>
         <!--  Favicon / -->
         <link rel="shortcut icon" href="favicon.png" type="image/x-icon" />
         <link rel="stylesheet" href="${pageContext.request.contextPath}css.css" />
         <link rel="stylesheet" href="css/gumby.css"/>   <!-- Gumby Framework /-->
         <link rel="stylesheet" href="css/style.css"/>   <!-- Main stylesheet /-->
-        
     </h:head>
     <h:body>
         <h:link value="Menu Principal" outcome="index.html"/>
         <br/>
         <br/>
-        <h3>Relatório de Estados</h3>
+
+        <h3>Relatório de Rodagem de Veículos</h3>
         <br/>
-        <h:dataTable value="#{estadoBean.pesquisarInfoDosEstados()}" var="estInfo" border="1">
+        
+        <!--h:dataTable value="#{veiculoBean.pesquisarInfoVeiculos()}" var="f" border="1">
             <h:column>
-                <f:facet name="header"><h:outputText value="SIGLA" /></f:facet>
-                <h:outputText value="#{estInfo.sigla}"/>
+                <f:facet name="header"><h:outputText value="PLACA" /></f:facet>
+                <h:outputText value="#{f.placa}"/>
             </h:column>
             <h:column>
-                <f:facet name="header"><h:outputText value="QUANTIDADE DE CIDADES" /></f:facet>
-                <h:outputText value="#{estInfo.quantCidades}"/>
+                <f:facet name="header"><h:outputText value="DATA" /></f:facet>
+                <h:outputText value="#{f.distTotal}"/>
             </h:column>
-            <h:column>
-                <f:facet name="header"><h:outputText value="POPULAÇÂO TOTAL" /></f:facet>
-                <h:outputText value="#{estInfo.popTotal}"/>
-            </h:column>
-        </h:dataTable>
+        </h:dataTable-->
+        
+        <p:chart type="bar" model="#{veiculoBean.barModel}" style="height:300px"/>
+        
     </h:body>
 </html>
 
