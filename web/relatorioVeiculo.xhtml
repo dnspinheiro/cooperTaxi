@@ -2,6 +2,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://java.sun.com/jsf/core">
     <h:head>
         <title>Relatório de Veículos</title>
@@ -15,18 +16,72 @@
         <h:link value="Menu Principal" outcome="index.html"/>
         <br/>
         <br/>
-        <h3>Relatório de Veículos</h3>
+
+        <h3>Relatório de Veiculos</h3>
         <br/>
-        <h:dataTable value="#{veiculoBean.pesquisarInfoVeiculos()}" var="veiInfo" border="1">
-            <h:column>
+
+        <h:form id="formRelVei" class="form-horizontal">
+
+            <h:inputHidden value="#{despesaReceitaVeiculoBean.veiculo.id}"/>
+
+            <div class="control-group">
+                <div class="controls">
+                    Placa*<h:inputText id="nome" value="#{despesaReceitaVeiculoBean.veiculo.placa}" required="true" requiredMessage="Campo Obrigatório"/><br/>
+                    <h:messages for="nome"/>
+                </div>
+            </div>
+            
+        </h:form>
+        <br/>
+        <form>
+            <h:dataTable value="#{despesaReceitaVeiculoBean.veiculos}" var="vei" border="1">
+                <h:column>
+                    <f:facet name="header"><h:outputText value="PLACA" /></f:facet>
+                    <h:form>
+                        <h:commandLink value="#{vei.placa}">                        
+                            <f:setPropertyActionListener target="#{despesaReceitaVeiculoBean.veiculo}" value="#{vei}"/>
+                        </h:commandLink>
+                    </h:form>
+                </h:column>
+                <h:column>
+                    <f:facet name="header"><h:outputText value="ESTILO" /></f:facet>
+                    <h:form>
+                        <h:commandLink value="#{vei.estilo}">                        
+                            <f:setPropertyActionListener target="#{despesaReceitaVeiculoBean.veiculo}" value="#{vei}"/>
+                        </h:commandLink>
+                    </h:form>
+                </h:column>
+                <h:column>
+                    <f:facet name="header"><h:outputText value="MARCA" /></f:facet>
+                    <h:form>
+                        <h:commandLink value="#{vei.marca}">                        
+                            <f:setPropertyActionListener target="#{despesaReceitaVeiculoBean.veiculo}" value="#{vei}"/>
+                        </h:commandLink>
+                    </h:form>
+                </h:column>
+            </h:dataTable>
+        </form>
+        
+        <!--
+        <h:dataTable value="#{despesaReceitaVeiculoBean.pesquisarDespesaVeiculo()}" var="f" border="1">
+                <h:column>
                 <f:facet name="header"><h:outputText value="PLACA" /></f:facet>
-                <h:outputText value="#{veiInfo.placa}"/>
+                <h:outputText value="#{f.placa}"/>
             </h:column>
             <h:column>
-                <f:facet name="header"><h:outputText value="DISTÂNCIA" /></f:facet>
-                <h:outputText value="#{veiInfo.distTotal}"/>
+                <f:facet name="header"><h:outputText value="TOTAL" /></f:facet>
+                <h:outputText value="#{f.total}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header"><h:outputText value="DATA" /></f:facet>
+                <h:outputText value="#{f.dat}"/>
             </h:column>
         </h:dataTable>
+        -->
+        
+        <p:panel>
+            <p:lineChart value="#{despesaReceitaVeiculoBean.modelo}" yaxisLabel="Total de Compras R$" legendPosition="e" minY="0" minX="0" maxY="2000"  style="height:300px;margin-top:20px"/> 
+        </p:panel>
     </h:body>
 </html>
 

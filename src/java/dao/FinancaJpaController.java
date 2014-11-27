@@ -144,6 +144,28 @@ public class FinancaJpaController implements Serializable {
             }
         }
     }
+    
+    public List<RelatorioFinanca> pesquisarDespesaVeiculo(){
+        EntityManager em = getEntityManager();
+        try {
+            
+            Query q = em.createQuery("select NEW modelo.RelatorioFinanca(v.placa, f.valor, f.dat) from Financa f, Veiculo v where v.id = f.veiculo.id and f.tipo = 'Despesa'");
+            return q.getResultList();
+        } finally {
+            em.close();
+        }
+    }
+    
+    public List<RelatorioFinanca> pesquisarReceitaVeiculo(){
+        EntityManager em = getEntityManager();
+        try {
+            
+            Query q = em.createQuery("select NEW modelo.RelatorioFinanca(v.placa, f.valor, f.dat) from Financa f, Veiculo v where v.id = f.veiculo.id and f.tipo = 'Receita'");
+            return q.getResultList();
+        } finally {
+            em.close();
+        }
+    }
 
     public List<Financa> findFinancaEntities() {
         return findFinancaEntities(true, -1, -1);
